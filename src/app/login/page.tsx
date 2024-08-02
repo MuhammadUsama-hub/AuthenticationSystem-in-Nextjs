@@ -2,7 +2,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function Login() {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const [buttonDisabled, setSendButtonDisabled] = useState(true);
   const [user, setUser] = useState({
@@ -17,6 +19,7 @@ export default function Login() {
     try {
       await axios.post('/api/users/login',userLogin)
       console.log('loggedin Successfully')
+      router.push('/profile')
       
     } catch (error:any) {
       console.log('something went wroing'+error.message)
