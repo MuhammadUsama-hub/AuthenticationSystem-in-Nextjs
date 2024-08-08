@@ -1,52 +1,46 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
-import axios from 'axios'
+import axios from "axios";
 import { useRouter } from "next/navigation";
 export default function Home() {
-  const router = useRouter()
-  const [token,setToken] = useState('')
-  const [isLogout,setIsLogout] = useState(false)
-  const[isLogedIn,setIsloggedin]=useState(false)
-console.log(token)
-  const onLogout = async()=>{
+  const router = useRouter();
+  const [token, setToken] = useState("");
+  const [isLogout, setIsLogout] = useState(false);
+  const [isLogedIn, setIsloggedin] = useState(false);
+  console.log(token);
+  const onLogout = async () => {
     try {
-      await axios.get('/api/users/logout')
-      console.log('Logut Successfully')
-      setIsLogout(true)
-      setIsloggedin(false)
-      router.push('/')
-      
-    } catch (error:any) {
-      console.log('Something Went Wrong'+error.message)
-      
+      await axios.get("/api/users/logout");
+      console.log("Logut Successfully");
+      setIsLogout(true);
+      setIsloggedin(false);
+      router.push("/");
+    } catch (error: any) {
+      console.log("Something Went Wrong" + error.message);
     }
+  };
+  useEffect(() => {
+    const cookies = document.cookie.split("; ");
+    const tokenCookie = cookies.find((cookie) => cookie.startsWith("token="));
+    console.log(tokenCookie);
+    if (tokenCookie) {
+      const tokenValue = tokenCookie.split("=")[1];
+      console.log(tokenValue);
+      setToken(tokenValue);
+    }
+  }, []);
 
-  }
-  useEffect(()=>{
-    const cookies = document.cookie.split('; ');
-      const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
-      console.log(tokenCookie)
-      if (tokenCookie) {
-        const tokenValue = tokenCookie.split('=')[1];
-        console.log(tokenValue)
-        setToken(tokenValue);
-      }
-  },[])
-  
-  useEffect(()=>{
-    if(token.length>0){
-      setIsloggedin(true)
-      setIsLogout(false)
+  useEffect(() => {
+    if (token.length > 0) {
+      setIsloggedin(true);
+      setIsLogout(false);
+    } else {
+      setIsloggedin(false);
+      setIsLogout(true);
     }
-    else{
-      setIsloggedin(false)
-      setIsLogout(true)
-    }
-    
-
-  },[token])
+  }, [token]);
   return (
     <>
       <header className="bg-white dark:bg-gray-900">
@@ -91,33 +85,34 @@ console.log(token)
               contact
             </Link>
           </div>
-          {isLogout && ( <div className="flex flex-row text-white justify-center items-center w-35 ">
+          {isLogout && (
+            <div className="flex flex-row text-white justify-center items-center w-35 ">
               <Link
-              href="/login"
-              className="bg-green-500 px-6 hover:bg-green-400 rounded transition-colors duration-300 transform dark:hover:text-gray-200  "
-            >
-              login
-            </Link>
-            <Link
-              href="/signup"
-              className=" hover:text-gray-400 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-white mx-1 sm:mx-6"
-            >
-              signUp
-            </Link>
-            
-            
-          </div>)}
+                href="/login"
+                className="bg-green-500 px-6 hover:bg-green-400 rounded transition-colors duration-300 transform dark:hover:text-gray-200  "
+              >
+                login
+              </Link>
+              <Link
+                href="/signup"
+                className=" hover:text-gray-400 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-white mx-1 sm:mx-6"
+              >
+                signUp
+              </Link>
+            </div>
+          )}
 
-          {isLogedIn && (<div className="flex flex-row text-white justify-center items-center w-35 ">
-            <button 
-              onClick={onLogout}
-              className="flex flex-row  hover:text-gray-400 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-white mx-1 sm:mx-6"
-            >
-              Logout<Icon.BoxArrowInRight className="text-gray-300 font-bold text-2xl"/>
-            </button>
-         
-          </div>)}
-         
+          {isLogedIn && (
+            <div className="flex flex-row text-white justify-center items-center w-35 ">
+              <button
+                onClick={onLogout}
+                className="flex flex-row  hover:text-gray-400 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-white mx-1 sm:mx-6"
+              >
+                Logout
+                <Icon.BoxArrowInRight className="text-gray-300 font-bold text-2xl" />
+              </button>
+            </div>
+          )}
         </nav>
         {/* nav End */}
         <div className="container flex flex-col px-6 py-4 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
@@ -445,14 +440,10 @@ console.log(token)
                   </a>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-300">
-                    Branding
-                  </a>
+                  <a className="text-gray-600 hover:text-gray-300">Branding</a>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-300">
-                    Wrapping
-                  </a>
+                  <a className="text-gray-600 hover:text-gray-300">Wrapping</a>
                 </li>
               </nav>
             </div>
@@ -521,9 +512,7 @@ console.log(token)
                   </a>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-300">
-                    Policies
-                  </a>
+                  <a className="text-gray-600 hover:text-gray-300">Policies</a>
                 </li>
                 <li>
                   <a className="text-gray-600 hover:text-gray-300">
