@@ -19,7 +19,7 @@ export default function Login() {
     try {
       await axios.post('/api/users/login',userLogin)
       console.log('loggedin Successfully')
-      router.push('/profile')
+      router.push('/')
       
     } catch (error:any) {
       console.log('something went wroing'+error.message)
