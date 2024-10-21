@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { ErrorIcon } from "react-hot-toast";
 
 // This function can be marked `async` if using `await` inside
@@ -10,18 +10,21 @@ export function middleware(request: NextRequest) {
   const isPublicPath =
     path == "/login" ||
     path == "/signup" ||
-    path == "/" ||
     path == "/verifyresetpasswordmail" ||
     path == "/verifysignupemail";
   const token = request.cookies.get("token")?.value || '';
+  console.log({token, path})
+
+  
 
   if(isPublicPath && token){
     return NextResponse.redirect(new URL("/", request.url));
   }
   if(!isPublicPath && !token){
     return NextResponse.redirect(new URL("/login", request.url));
-
   }
+
+  
   } catch (error:any) {
     console.log('something goes wrong'+ error.message)
     
@@ -29,9 +32,11 @@ export function middleware(request: NextRequest) {
   
 }
 
-// See "Matching Paths" below to learn more
+
 export const config = {
   matcher: [
-  '/profile'
+  '/profile',
+  '/login',
+  '/signup'
   ],
 };

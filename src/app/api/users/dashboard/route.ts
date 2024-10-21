@@ -9,11 +9,12 @@ const POST = async (req: NextRequest) => {
   try {
     const userId = await getPaylod(req);
 
-    const user = await User.findOne({ userId }).select("-password ");
-
-    if (!user) {
+    if (!userId) {
       return NextResponse.json({ mesg: "invalid token", status: 400 });
     }
+    
+    const user = await User.findOne({ userId }).select("-password ");
+
 
     return NextResponse.json({
       mesg: "User Found successfully",
